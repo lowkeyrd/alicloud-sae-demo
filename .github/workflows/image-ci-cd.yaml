@@ -18,9 +18,9 @@ jobs:
     - name: Initializing Serverless-Devs
       uses: Serverless-Devs/serverless-devs-initialization-action@main
       with:
-        AccessKeyID: ${{ secrets.AccessKeyID }}
-        AccessKeySecret: ${{ secrets.AccessKeySecret }}
-        AccountID: ${{ secrets.AccountID }}
+        AccessKeyID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+        AccessKeySecret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+        AccountID: ${{ secrets.ALIYUN_ACCOUNT_ID }}
         provider: ${{ env.provider }}
     - name: Build package and make artifacts used serverless devs
       run: s image build
