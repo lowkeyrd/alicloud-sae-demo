@@ -1,0 +1,23 @@
+name: poc-pipeline
+# 触发pipeline事件源
+source:
+  #  github action schema
+  on:
+    push:
+      branches:
+        - master
+    pull_request:
+      branches:
+        - master
+
+# 部署配置
+stages:
+  - name: test
+    environment: sae-env-testing #指定环境
+
+  - name: canary-production
+    environment: sae-env-staging
+    overlays:
+      replicas: 5
+      cpu: 2000
+      memory: 4096

@@ -1,0 +1,21 @@
+edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: alicloud-sae-demo   #  项目名称
+
+services:
+  image: #  服务名称
+    component: devsapp/infrastructure-as-template
+    props:
+      template: "serverless-devs.com/alicloud-sae/service-image"
+      build:
+        codeUri: . #代码路径，会去这里寻找dockerfile
+        runtime: custom-container
+      deploy: # 以下参数由服务模板定义
+        image: registry-vpc.${environment.profile.region}.aliyuncs.com/fengchong_devops/poc-demo:v0.1
+        logDir: '/tmp/stdout.log"' #日志采集路径
+        memory: 2048
+        cpu: 1000
+        replicas: 2
+    actions: # 自定义执行逻辑
+      pre-build: # 在build之前运行
+        - run: echo 'add your unit test command here'  # 要运行的命令行
+          path: . # 命令行运行的路径

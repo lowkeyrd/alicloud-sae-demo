@@ -1,0 +1,32 @@
+name: poc-pipeline
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+env:
+  provider: alibaba
+jobs:
+  image:
+    name: serverless devs CI/CD for service image
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout source code
+      uses: actions/checkout@v2
+    - name: Initializing Serverless-Devs
+      uses: Serverless-Devs/serverless-devs-initialization-action@main
+      with:
+        AccessKeyID: ${{ secrets.AccessKeyID }}
+        AccessKeySecret: ${{ secrets.AccessKeySecret }}
+        AccountID: ${{ secrets.AccountID }}
+        provider: ${{ env.provider }}
+    - name: Build package and make artifacts used serverless devs
+      run: s image build
+    - name: Deploy the service on environment sae-env-testing
+      run: s image deploy --env=sae-env-testing
+    - name: Deploy the service on environment sae-env-staging
+      run: >-
+        s image deploy --env=sae-env-staging
+        --overlays='{"cpu":2000,"memory":4096,"replicas":5}'

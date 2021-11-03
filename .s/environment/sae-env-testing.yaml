@@ -1,0 +1,11 @@
+# testing.yaml
+name: sae-env-testing
+template: "serverless-devs.com/alicloud-sae/environment"  #引用环境模板
+props:
+  namePrefix: testing-sae #资源名字前缀
+  createLog: true #是否创建sls project、logstore，默认创建
+  createBucket: true #是否创建oss bucket，默认创建
+  createNas: true #是否创建nas文件系统、挂载点，默认创建
+  createSlb: true #是否创建slb，默认创建
+profile: #指定地域以及账号信息，不指定会从access中读取
+  region: "cn-hongkong"
